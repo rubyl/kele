@@ -27,6 +27,27 @@ class Kele
     "https://www.bloc.io/api/v1/#{endpoint}"
   end
 
+  def get_messages(page=nil)
+    if page=nil
+      response = self.class.get(api_url("message_threads"), user_auth)
+    else
+      response = self.class.get(api_url("message_threads?#{page}"), user_auth)
+    end
+    @message_data = JSON.parse(response.body)
+  end
+
+  def create_message(user_id, recipient_id, token=nil, subject, message)
+    response = self.class.post(api_url("messages"),
+      body: {
+        "user_id": user_id,
+        "recipient_id": recipient_id,
+        "token": token,
+        "subject": subject,
+        "stripped_text": message
+      }, headers: { authorization: @auth_token
+      })
+  end
+
   def user_auth
     {headers: {
       authorization: @auth_token

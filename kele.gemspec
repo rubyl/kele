@@ -13,4 +13,5 @@ Gem::Specification.new do |s|
   s.license       = 'MIT'
   s.add_runtime_dependency 'httparty', '~> 0.13'
   s.add_runtime_dependency 'json'
+  s.add_runtime_dependency 'awesome_print'
 end

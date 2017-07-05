@@ -1,5 +1,6 @@
 require 'httparty'
 require 'json'
+require "awesome_print"
 
 class Kele
   include HTTParty
@@ -14,6 +15,12 @@ class Kele
     response = self.class.get(api_url("users/me"), headers: { "authorization" => @auth_token })
     @user_data = JSON.parse(response.body)
     @user_data
+  end
+
+  def get_mentor_availability(id)
+    response = self.class.get(api_url("mentors/#{id}/student_availability"), headers: { "authorization" => @auth_token })
+    @mentor_data = JSON.parse(response.body)
+    @mentor_data
   end
 
   def api_url(endpoint)
